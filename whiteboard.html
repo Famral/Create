@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Famral Create: Free Online Digital Whiteboard</title>
+    <link rel="icon" type="image/x-icon" href="https://www.famral.com/favicon.png" />
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            min-height: 100vh;
+            background-color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        canvas {
+            border: 8px double #dfdfdf;
+            max-width: 100%;
+            max-height: 95%;
+            margin: 10px 5;
+        }
+
+        #navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #ffffff;
+            width: 100%;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            box-shadow: 0px -10px 10px rgba(0, 0, 0, 0.1);
+            /* Added shadow to navbar */
+        }
+
+        button,
+        .dropbtn {
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 0px;
+            background-color: #838383;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        button:hover,
+        .dropbtn:hover {
+            background-color: #3498db;
+        }
+
+        .redcolor {
+            background-color: #FF0000;
+        }
+
+        .redcolor:hover {
+            background-color: #ad0000;
+        }
+
+        .bluecolor {
+            background-color: #2b1cff;
+        }
+
+        .bluecolor:hover {
+            background-color: #0000af;
+        }
+
+        .greencolor {
+            background-color: #00ce00;
+        }
+
+        .greencolor:hover {
+            background-color: #009600;
+        }
+
+        .blackcolor {
+            background-color: #272727;
+        }
+
+        .blackcolor:hover {
+            background-color: #000000;
+        }
+
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.2);
+            padding: 5px;
+            z-index: 1;
+            border-radius: 0px;
+            top: -300%;
+            /* Adjusted to move options above the button */
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        #navbar button,
+        #navbar .dropbtn {
+            margin: 5px;
+            /* Added some spacing between buttons */
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="whiteboard" width="1500" height="760"></canvas>
+
+    <div id="navbar">
+        <button class="redcolor" onclick="changeColor('#FF0000')">Red</button>
+        <button class="bluecolor" onclick="changeColor('#0000FF')">Blue</button>
+        <button class="greencolor" onclick="changeColor('#00FF00')">Green</button>
+        <button class="blackcolor" onclick="changeColor('#000000')">Black</button>
+
+        <div class="dropdown">
+            <button class="dropbtn">Brush Size</button>
+            <div class="dropdown-content">
+                <button onclick="changeBrushSize(5)">Small</button>
+                <button onclick="changeBrushSize(10)">Medium</button>
+                <button onclick="changeBrushSize(15)">Large</button>
+            </div>
+        </div>
+
+        <button onclick="clearCanvas()">Clear</button>
+        <button onclick="downloadImage()">Save</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.6/fabric.min.js"></script>
+    <script>
+        const canvas = new fabric.Canvas('whiteboard', { isDrawingMode: true });
+
+        function changeColor(color) {
+            canvas.freeDrawingBrush.color = color;
+        }
+
+        function changeBrushSize(size) {
+            canvas.freeDrawingBrush.width = size;
+        }
+
+        function clearCanvas() {
+            canvas.clear();
+        }
+
+        function downloadImage() {
+            const dataURL = canvas.toDataURL({ format: 'png' });
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'Quickboard.png';
+            link.click();
+        }
+    </script>
+
+</body>
+
+</html>
